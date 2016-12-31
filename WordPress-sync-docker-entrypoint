@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+CONFIG="/var/www/html/config.php"
+
+if [ ! -z "$WPSYNC_REPO" ]; then
+    WPSYNC_REPO="${WPSYNC_REPO/\'/\\\'}"
+    sed -i "s_example/Test-Repo_${WPSYNC_REPO/_/\\_}_" $CONFIG
+fi
+if [ ! -z "$WPSYNC_SECRET" ]; then
+    WPSYNC_SECRET="${WPSYNC_SECRET/\'/\\\'}"
+    sed -i "s_GITHUB SHARED SECRET_${WPSYNC_SECRET/_/\\_}_" $CONFIG
+fi
+if [ ! -z "$WPSYNC_URL" ]; then
+    WPSYNC_URL="${WPSYNC_URL/\'/\\\'}"
+    sed -i "s_http://svn.example.com/test-repo/_${WPSYNC_URL/_/\\_}_" $CONFIG
+fi
+if [ ! -z "$WPSYNC_USER" ]; then
+    WPSYNC_USER="${WPSYNC_USER/\'/\\\'}"
+    sed -i "s_your-username-here_${WPSYNC_USER/_/\\_}_" $CONFIG
+fi
+if [ ! -z "$WPSYNC_PASS" ]; then
+    WPSYNC_PASS="${WPSYNC_PASS/\'/\\\'}"
+    sed -i "s_your-password-here_${WPSYNC_PASS/_/\\_}_" $CONFIG
+fi
+
+exec docker-php-entrypoint "$@"

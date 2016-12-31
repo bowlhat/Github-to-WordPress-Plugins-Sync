@@ -41,7 +41,7 @@ class Github_to_Worg_SVN {
 	}
 
 	function populate_post_vars() {
-		if ( 'application/json' == $_SERVER['HTTP_CONTENT_TYPE'] ) {
+		if ( 'application/json' === $_SERVER['CONTENT_TYPE'] || 'application/json' === $_SERVER['HTTP_CONTENT_TYPE'] ) {
 			$_POST = @json_decode( file_get_contents('php://input'), true );
 		} else {
 			// Assuming Magic Quotes disabled like a good host.

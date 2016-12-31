@@ -25,3 +25,18 @@ The use-case this has been written for is:
    * "%GITHUB_MERGE_DATETIME%" will be replaced with the current datetime upon which the sync happens, for example, "2014-12-25 17:00:00"
  * For WordPress feature plugins which use this, it'd be advised to include "%GITHUB_MERGE_SVN_REV%" in the Plugin Version header, and keep the plugin development in trunk (Stable Tag: trunk) to allow for nightly builds of the plugin to be sent out. You could also incorporate "%GITHUB_MERGE_DATE%" in there if wished.
  * To perform a Release, one would have to make the release from a revision which has the "Stable Tag" set to what the release will be, in this case, it's best not to use trunk and instead release from a branch, and then update the readme.TXT in trunk to reflect it.
+
+Docker Support
+--------------
+
+This repo is available as a docker image named `diddledan/wpsync`. [The wpsync image is available from the docker hub](https://hub.docker.com/r/diddledan/wpsync/).
+
+The configuration is controlled via environment variables:
+
+* `WPSYNC_REPO` Your github repo name e.g. `your-github-username/your-project-name`
+* `WPSYNC_URL` The SVN address for your plugin on WordPress.org, e.g. https://plugins.svn.wordpress.org/your-plugin-slug/
+* `WPSYNC_SECRET` A secret code shared between this script and github to verify the authenticity of each request
+* `WPSYNC_USER` Your WordPress.org user-name
+* `WPSYNC_PASS` The password associated with your WordPress.org account
+
+Unfortunately due to SVN relying upon HTTP Authentication your user name and password are required. Be careful who can access your Docker system or configuration.
